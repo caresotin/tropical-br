@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tropical Ice Co. — Sorvete em Contêiner, Direto da Fábrica</title>
+<style>
+  :root {
+    --mango: #ffb347;
+    --mango-deep: #ff8c1a;
+    --strawberry: #ff4d79;
+    --berry: #c9184a;
+    --lime: #a3e635;
+    --pineapple: #fff3c4;
+    --cream: #fff8ef;
+    --ink: #4a2c2a;
+    --ink-soft: #6b4a45;
+    --card: #ffffff;
+    --gray: #8a6a60;
+    --border: #ffe3c9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255, 248, 239, 0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 24px; max-width: 1180px; margin: 0 auto;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; color: var(--ink); }
+  .logo-icon {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--mango), var(--strawberry));
+    display: grid; place-items: center; color: #fff; font-size: 1.1rem;
+  }
+  .nav-links { display: flex; gap: 28px; font-size: 0.92rem; font-weight: 700; }
+  .nav-links a { color: var(--ink); text-decoration: none; opacity: 0.8; }
+  .nav-links a:hover { opacity: 1; color: var(--berry); }
+  .btn {
+    display: inline-block; border: none; cursor: pointer; text-decoration: none;
+    font-weight: 800; border-radius: 999px; padding: 12px 26px; font-size: 0.95rem;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-accent { background: linear-gradient(135deg, var(--strawberry), var(--mango-deep)); color: #fff; box-shadow: 0 6px 18px rgba(255,77,121,.4); }
+  .btn-accent:hover { filter: brightness(1.05); }
+  .btn-ghost { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.8); }
+  .btn-ghost:hover { background: rgba(255,255,255,.14); }
+  .btn-dark { background: var(--berry); color: #fff; }
+  .btn-dark:hover { background: #a0103c; }
+
+  /* HERO */
+  .hero {
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,255,255,.22) 0, transparent 26%),
+      radial-gradient(circle at 85% 75%, rgba(255,255,255,.18) 0, transparent 28%),
+      linear-gradient(135deg, var(--mango) 0%, var(--strawberry) 55%, var(--berry) 100%);
+    color: #fff; padding: 110px 0 90px; position: relative; overflow: hidden;
+  }
+  .hero-emoji-bg { position: absolute; font-size: 11rem; opacity: .14; right: 6%; top: 12%; transform: rotate(14deg); }
+  .hero h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.12; font-weight: 900; max-width: 720px; letter-spacing: -.5px; text-shadow: 0 3px 14px rgba(0,0,0,.12); }
+  .hero h1 span { color: var(--pineapple); }
+  .hero p { font-size: 1.15rem; max-width: 580px; margin: 20px 0 34px; opacity: .96; text-shadow: 0 1px 6px rgba(0,0,0,.1); }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero-badges { display: flex; gap: 26px; margin-top: 46px; flex-wrap: wrap; }
+  .hero-badge { display: flex; align-items: center; gap: 8px; font-size: .92rem; font-weight: 700; background: rgba(255,255,255,.16); padding: 8px 16px; border-radius: 999px; }
+
+  /* STATS */
+  .stats { background: #fff; border-bottom: 1px solid var(--border); }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; padding: 40px 0; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 2.1rem; font-weight: 900; background: linear-gradient(135deg, var(--mango-deep), var(--berry)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .stat-label { font-size: .9rem; color: var(--gray); margin-top: 4px; font-weight: 600; }
+
+  /* SECTIONS */
+  section { padding: 84px 0; }
+  .section-head { text-align: center; max-width: 660px; margin: 0 auto 52px; }
+  .section-head h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 900; letter-spacing: -.3px; }
+  .section-head p { color: var(--gray); margin-top: 12px; font-size: 1.02rem; }
+  .eyebrow { display: inline-block; font-size: .8rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--berry); background: rgba(255,77,121,.12); padding: 6px 14px; border-radius: 999px; margin-bottom: 16px; }
+
+  /* PRODUCTS */
+  .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .product-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 28px 22px;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .product-card:hover { transform: translateY(-6px) rotate(-1deg); box-shadow: 0 16px 40px rgba(255,140,26,.18); }
+  .product-emoji { font-size: 2.6rem; display: inline-block; }
+  .product-card h3 { margin: 14px 0 8px; font-size: 1.1rem; }
+  .product-card p { font-size: .9rem; color: var(--gray); }
+
+  /* PRODUCT IMG */
+  .product-card img.product-img { width: 100%; height: 170px; object-fit: cover; border-radius: 14px; margin-bottom: 6px; }
+
+  /* COLD CHAIN */
+  .chain { background: linear-gradient(170deg, #fff3c4, #ffe9d6); }
+  .chain-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; align-items: center; }
+  .chain-points { display: grid; gap: 20px; }
+  .chain-point { display: flex; gap: 16px; background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 4px 16px rgba(201,24,74,.08); }
+  .chain-point-icon { font-size: 1.6rem; }
+  .chain-point h4 { font-size: 1.02rem; margin-bottom: 4px; }
+  .chain-point p { font-size: .9rem; color: var(--gray); }
+  .chain-visual { border-radius: 24px; overflow: hidden; box-shadow: 0 24px 60px rgba(201,24,74,.2); }
+  .chain-visual img { width: 100%; height: 100%; object-fit: cover; display: block; min-height: 380px; }
+
+  /* ROUTES */
+  .routes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .route-card { background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 28px; }
+  .route-card h3 { font-size: 1.15rem; margin-bottom: 10px; }
+  .route-card .route-meta { font-size: .9rem; color: var(--gray); margin-bottom: 16px; }
+  .route-list { list-style: none; font-size: .9rem; display: grid; gap: 8px; }
+  .route-list li { display: flex; justify-content: space-between; align-items: center; }
+  .route-list li span:first-child { color: var(--gray); }
+  .route-list li span:last-child { font-weight: 800; color: var(--berry); }
+  .route-tag { display: inline-block; font-size: .75rem; font-weight: 800; background: rgba(163,230,53,.25); color: #4d7c0f; padding: 4px 10px; border-radius: 999px; margin-top: 14px; }
+
+  /* PROCESS */
+  .process-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+  .step { text-align: center; }
+  .step-num {
+    width: 46px; height: 46px; border-radius: 50%; color: #fff;
+    background: linear-gradient(135deg, var(--mango), var(--strawberry));
+    display: grid; place-items: center; font-weight: 900; margin: 0 auto 14px; font-size: 1.05rem;
+    box-shadow: 0 6px 14px rgba(255,77,121,.3);
+  }
+  .step h4 { font-size: .98rem; margin-bottom: 6px; }
+  .step p { font-size: .84rem; color: var(--gray); }
+
+  /* SOLUTIONS */
+  .solutions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .solution-card { border-radius: 20px; padding: 32px; color: #fff; position: relative; overflow: hidden; }
+  .solution-card:nth-child(1) { background: linear-gradient(140deg, #ff8c1a, #ff4d79); }
+  .solution-card:nth-child(2) { background: linear-gradient(140deg, #c9184a, #6a2c70); }
+  .solution-card:nth-child(3) { background: linear-gradient(140deg, #7fb800, #2a9d8f); }
+  .solution-card h3 { font-size: 1.15rem; margin-bottom: 10px; }
+  .solution-card p { font-size: .92rem; opacity: .92; }
+  .solution-card .sol-emoji { font-size: 2rem; margin-bottom: 14px; }
+
+  /* TESTIMONIALS */
+  .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .testi-card { background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 28px; }
+  .testi-card .quote { font-size: .95rem; font-style: italic; color: var(--ink-soft); margin-bottom: 18px; }
+  .testi-card .who { font-weight: 800; font-size: .9rem; }
+  .testi-card .where { font-size: .82rem; color: var(--gray); }
+
+  /* CTA */
+  .cta {
+    background: linear-gradient(135deg, var(--mango), var(--strawberry), var(--berry));
+    color: #fff; text-align: center; padding: 90px 0;
+  }
+  .cta h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; text-shadow: 0 3px 14px rgba(0,0,0,.14); }
+  .cta p { margin: 16px auto 34px; max-width: 540px; opacity: .95; }
+
+  /* CONTACT */
+  .contact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .contact-card { background: #fff; border: 1px solid var(--border); border-radius: 18px; padding: 24px; text-align: center; }
+  .contact-card .c-icon { font-size: 1.8rem; }
+  .contact-card h4 { margin: 12px 0 6px; font-size: 1rem; }
+  .contact-card p { font-size: .88rem; color: var(--gray); font-weight: 600; }
+  .contact-card a { color: var(--berry); text-decoration: none; }
+
+  /* FOOTER */
+  footer { background: var(--ink); color: #fff; padding: 40px 0; }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .footer-inner .copy { opacity: .78; font-size: .88rem; }
+  .footer-inner .logo { color: #fff; }
+
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
+    .chain-grid { grid-template-columns: 1fr; }
+    .routes-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: repeat(2, 1fr); }
+    .solutions-grid { grid-template-columns: 1fr; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: repeat(2, 1fr); }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 560px) {
+    .products-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .hero-emoji-bg { font-size: 7rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">
+      <span class="logo-icon">🍦</span>
+      <span>TROPICAL ICE CO.</span>
+    </div>
+    <div class="nav-links">
+      <a href="#products">Produtos</a>
+      <a href="#chain">Cadeia de Frio</a>
+      <a href="#routes">Rotas</a>
+      <a href="#solutions">Soluções</a>
+      <a href="#contact">Contato</a>
+    </div>
+    <a href="#contact" class="btn btn-accent">Solicitar Orçamento</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-emoji-bg">🍨</div>
+  <div class="container">
+    <div style="display:inline-block;background:rgba(255,255,255,.22);padding:8px 18px;border-radius:999px;font-weight:800;margin-bottom:20px;font-size:.9rem;letter-spacing:1.2px;">⚡ Um passo à frente, à frente da concorrência</div>
+    <h1>Sorvete Premium, <span>Perfeição Congelada</span> no Mundo Todo.</h1>
+    <p>Da nossa fábrica até o seu mercado — cadeia de frio completa, receitas exclusivas e fabricação de marca própria para importadores e distribuidores no mundo inteiro.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-accent">Conheça Nossos Serviços</a>
+      <a href="#routes" class="btn btn-ghost">Ver Rotas de Entrega</a>
+    </div>
+    <div class="hero-badges">
+      <span class="hero-badge">✅ Verificado no Pacífico: 1 contêiner + 3 repetições</span>
+      <span class="hero-badge">✅ Cadeia de Frio Completa a -25°C</span>
+      <span class="hero-badge">✅ Pedido mínimo: 1 contêiner (20 pés)</span>
+    </div>
+  </div>
+</header>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="container stats-grid">
+    <div class="stat"><div class="stat-num">1</div><div class="stat-label">Contêiner Esgotado no Pacífico</div></div>
+    <div class="stat"><div class="stat-num">+3</div><div class="stat-label">Pedidos de Repetição</div></div>
+    <div class="stat"><div class="stat-num">1×20'</div><div class="stat-label">Pedido Mínimo em Contêiner</div></div>
+    <div class="stat"><div class="stat-num">-25°C</div><div class="stat-label">Controle Constante</div></div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Nossa Linha</span>
+      <h2>Sorvetes Feitos para Exportação</h2>
+      <p>Formulados para transporte de longa distância — textura estável, sem cristais de gelo e qualidade consistente em cada contêiner.</p>
+    </div>
+    <div class="products-grid">
+      <div class="product-card"><img class="product-img" src="assets/images/product-1.jpg" alt="Sorbet de Manga"><h3>Sorbet de Manga</h3><p>Polpa tropical intensa — o favorito do mercado brasileiro.</p></div>
+      <div class="product-card"><img class="product-img" src="assets/images/product-2.jpg" alt="Coco"><h3>Coco</h3><p>Textura cremosa e sabor natural de coco.</p></div>
+      <div class="product-card"><img class="product-img" src="assets/images/product-3.jpg" alt="Maracujá"><h3>Maracujá</h3><p>Equilíbrio perfeito entre doce e azedo.</p></div>
+      <div class="product-card"><img class="product-img" src="assets/images/product-4.jpg" alt="Napolitano"><h3>Napolitano</h3><p>O clássico de três sabores em balde.</p></div>
+      <div class="product-card"><img class="product-img" src="assets/images/product-5.jpg" alt="Baunilha"><h3>Baunilha</h3><p>Base versátil para milkshakes e sobremesas.</p></div>
+      <div class="product-card"><img class="product-img" src="assets/images/product-6.jpg" alt="Chocolate"><h3>Chocolate</h3><p>Intenso e aveludado — vende por si só.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- COLD CHAIN -->
+<section class="chain" id="chain">
+  <div class="container chain-grid">
+    <div class="chain-points">
+      <div class="section-head" style="text-align:left; margin:0 0 24px;">
+        <span class="eyebrow">Cadeia de Frio</span>
+        <h2>Profissional a Cada Quilômetro</h2>
+        <p>Sorvete não perdoa. Por isso nossa logística nunca deixa a temperatura — nem a qualidade — cair.</p>
+      </div>
+      <div class="chain-point"><div class="chain-point-icon">🌡️</div><div><h4>Controle Preciso de Temperatura</h4><p>-25°C constantes da linha de produção ao armazém do cliente, monitorados 24/7.</p></div></div>
+      <div class="chain-point"><div class="chain-point-icon">📡</div><div><h4>Monitoramento em Tempo Real</h4><p>Rastreamento ao vivo em cada contêiner. Você acompanha a temperatura, não só a localização.</p></div></div>
+      <div class="chain-point"><div class="chain-point-icon">🚢</div><div><h4>Parceiros de Frota Reefer</h4><p>Contratos de longo prazo com grandes armadoras garantem capacidade reefer estável.</p></div></div>
+      <div class="chain-point"><div class="chain-point-icon">📋</div><div><h4>Documentação de Exportação</h4><p>Certificados sanitários, COO e documentação alfandegária — nossa equipe cuida de tudo.</p></div></div>
+    </div>
+    <div class="chain-visual">
+      <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1000&q=80" alt="Logística de contêiner reefer">
+    </div>
+  </div>
+</section>
+
+<!-- ROUTES -->
+<section id="routes">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Portfólio de Entregas</span>
+      <h2>Rotas Principais e Desempenho</h2>
+      <p>Rotas comprovadas com dados reais. Peça o relatório completo de temperatura de qualquer rota.</p>
+    </div>
+    <div class="routes-grid">
+      <div class="route-card">
+        <h3>🌍 Oriente Médio</h3>
+        <div class="route-meta">EAU · Arábia Saudita · Catar · Kuwait</div>
+        <ul class="route-list">
+          <li><span>Tempo de Trânsito</span><span>Conforme armadora</span></li>
+          <li><span>Cadeia de Frio</span><span>Reefer -25°C monitorado</span></li>
+          <li><span>Documentação</span><span>Completa, incluída</span></li>
+        </ul>
+        <span class="route-tag">📄 Relatório de Temperatura Disponível</span>
+      </div>
+      <div class="route-card">
+        <h3>🌏 Sudeste Asiático</h3>
+        <div class="route-meta">Singapura · Malásia · Indonésia · Vietnã</div>
+        <ul class="route-list">
+          <li><span>Tempo de Trânsito</span><span>Conforme armadora</span></li>
+          <li><span>Cadeia de Frio</span><span>Reefer -25°C monitorado</span></li>
+          <li><span>Documentação</span><span>Completa, incluída</span></li>
+        </ul>
+        <span class="route-tag">📄 Relatório de Temperatura Disponível</span>
+      </div>
+      <div class="route-card">
+        <h3>🇧🇷 Brasil</h3>
+        <div class="route-meta">Santos · Rio de Janeiro · Paranaguá · Itajaí</div>
+        <ul class="route-list">
+          <li><span>Tempo de Trânsito</span><span>Conforme armadora</span></li>
+          <li><span>Cadeia de Frio</span><span>Reefer -25°C monitorado</span></li>
+          <li><span>Documentação</span><span>Completa, incluída</span></li>
+        </ul>
+        <span class="route-tag">📄 Relatório de Temperatura Disponível</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section style="background:#fff;">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Como Funciona</span>
+      <h2>Do Primeiro E-mail ao Primeiro Contêiner</h2>
+    </div>
+    <div class="process-steps">
+      <div class="step"><div class="step-num">1</div><h4>Consulta</h4><p>Conte-nos seu mercado, volume e preço-alvo.</p></div>
+      <div class="step"><div class="step-num">2</div><h4>Amostra</h4><p>Enviamos amostras para degustação e testes.</p></div>
+      <div class="step"><div class="step-num">3</div><h4>Pedido Inicial</h4><p>1 contêiner (20 pés) — o padrão mínimo de exportação.</p></div>
+      <div class="step"><div class="step-num">4</div><h4>Escalar</h4><p>Pedidos recorrentes, fórmulas personalizadas, marca própria.</p></div>
+      <div class="step"><div class="step-num">5</div><h4>Entregar</h4><p>Cadeia de frio completa até seu porto, porta ou armazém.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section id="solutions">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Soluções de Negócio</span>
+      <h2>Mais que uma Fábrica. Uma Parceria de Crescimento.</h2>
+    </div>
+    <div class="solutions-grid">
+      <div class="solution-card">
+        <div class="sol-emoji">🏭</div>
+        <h3>Fabricação de Marca Própria</h3>
+        <p>Sua marca em nossas receitas comprovadas. Design de embalagem, fornecimento de ingredientes e produção — um único parceiro, controle total.</p>
+      </div>
+      <div class="solution-card">
+        <div class="sol-emoji">📦</div>
+        <h3>Fornecimento em Atacado</h3>
+        <p>Preços FOB/CIF competitivos para importadores e distribuidores. Suprimento estável o ano todo, não só na alta temporada.</p>
+      </div>
+      <div class="solution-card">
+        <div class="sol-emoji">🧑‍🍳</div>
+        <h3>Fórmulas Personalizadas</h3>
+        <p>Precisa de uma linha com menos açúcar? De um sabor local? Nosso time de P&amp;D desenvolve receitas para o seu mercado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Depoimentos</span>
+      <h2>Confiável para Importadores em Três Continentes</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="quote">"Caso real — Pacífico: nosso primeiro contêiner esgotou, seguido de 3 pedidos de repetição consecutivos. Qualidade consistente, do primeiro ao último picolé."</div>
+        <div class="who">Tropical Ice Co.</div>
+        <div class="where">Resultado de exportação verificado · Pacífico</div>
+      </div>
+      <div class="testi-card">
+        <div class="quote">"Fabricação OEM completa: sua marca, nossa fábrica. Do conceito ao contêiner — receita, embalagem e produção em um único parceiro."</div>
+        <div class="who">Marca Própria (OEM)</div>
+        <div class="where">Disponível para importadores e redes</div>
+      </div>
+      <div class="testi-card">
+        <div class="quote">"Preço direto de fábrica e logística reefer completa. Detalhes comerciais e condições na negociação — entre em contato."</div>
+        <div class="who">Atacado / Distribuição</div>
+        <div class="where">FOB/CIF — sob consulta</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta">
+  <div class="container">
+    <h2>Pronto para Enviar Seu Primeiro Contêiner?</h2>
+    <p>Conte-nos seu mercado e volume — enviaremos um orçamento personalizado, com amostras e um plano completo de cadeia de frio, em até 48 horas.</p>
+    <a href="#contact" class="btn btn-dark" style="font-size:1.05rem; padding:16px 40px;">Solicitar Orçamento</a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact" style="padding-bottom:40px;">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Contato</span>
+      <h2>Fale com Nosso Time de Exportação</h2>
+      <p>Respondemos em até 24 horas — geralmente bem mais rápido no WhatsApp.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="c-icon">💬</div>
+        <h4>WhatsApp</h4>
+        <p><a href="https://wa.me/8615905078166">+86 159 0507 8166</a></p>
+      </div>
+      <div class="contact-card">
+        <div class="c-icon">✉️</div>
+        <h4>E-mail</h4>
+        <p><a href="mailto:caresotin@gmail.com">caresotin@gmail.com</a></p>
+      </div>
+      <div class="contact-card">
+        <div class="c-icon">🎥</div>
+        <h4>Videoconferência</h4>
+        <p>Zoom / Google Meet sob solicitação</p>
+      </div>
+      <div class="contact-card">
+        <div class="c-icon">📍</div>
+        <h4>Escritório Central</h4>
+        <p>Fábrica na China · Exportação mundial</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container footer-inner">
+    <div class="logo">
+      <span class="logo-icon">🍦</span>
+      <span>TROPICAL ICE CO.</span>
+    </div>
+    <div class="copy">© 2026 Tropical Ice Co. · Sorvetes em contêiner, direto da fábrica.</div>
+  </div>
+</footer>
+
+</body>
+</html>
